@@ -4,57 +4,44 @@
 
 @implementation GamePlayScene
 
-- (void)initialize
+-(void)initialize
 {
-    // put your initialization code below this line
-    // initialize the character
-    character = [Character createFlappy];
-    // add character to the scene
-    [self addToScene:character];
-    [self addObstacle];
-    timeSinceObstacle = 0;
-    [self showScore];
-    // put your initialization code above this line
-}
-
-// put new methods below this line
-
-- (void)tap
-{
-    // this will get called every time the player
-    // taps the screen.
-    [character flap];
-}
-
-- (void)update:(CCTime)delta
-{
-    // this will be run every frame.
-    // delta is the time thay has elapsed since the last time it was run.
-    [character move];
-    // Increment the time since last obstacle was added
-    // delta is ~1/60th of a second
-    timeSinceObstacle += delta;
+    //load a new Character from the CCB file
+    character = (Character*)[CCBReader load:@"Character"];
     
-    // Check to see if two seconds have passed
-    if (timeSinceObstacle &gt; 1.5)
-    {
-        // Add a new obstacle
+    //add your character as a child of physicsNode
+    [physicsNode addChild:character];
+    
+    //adding obstacle
+    [self addObstacle];
+    timeSinceObstacle = 0.0f;
+    
+}
+//update method will be run every frame
+//delta is the time that has elapsed since the last time it was run
+-(void)update:(CCTime)delta
+{
+    
+    //increment the time since the last obstacle was added
+    timeSinceObstacle += delta; //delta is approximately 1/60th of a second
+    //check to see if two seconds have passed
+    if (timeSinceObstacle > 2.0f) {
+        
+        //add a new obstacle
         [self addObstacle];
         
-        // Then reset the time.
-        timeSinceObstacle = 0;
+        //then reset the timer
+        timeSinceObstacle = 0.0f;
+        
     }
 }
-// put new methods above this line
-- (void) collisionWithObstacle
-{
-    //this gets called when the bird collides with an obstacle
-    [self gameOver];
-}
 
-- (void) passedObstacle
-{
-    // Update the score
-    [self increaseScore];
+// put new methods here
+
+-(void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+    //this will get called every time the player touches the screen
+    [character flap];
 }
 @end
+
+
