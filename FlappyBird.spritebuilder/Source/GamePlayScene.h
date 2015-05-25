@@ -27,5 +27,4 @@ typedef NS_ENUM(NSInteger, DrawingOrder) {
 -(void) showScore;
 // declare variables below this line
 float timeSinceObstacle;
-
 @end

@@ -6,36 +6,55 @@
 
 - (void)initialize
 {
+    // put your initialization code below this line
+    // initialize the character
+    character = [Character createFlappy];
+    // add character to the scene
+    [self addToScene:character];
     [self addObstacle];
-    timeSinceObstacle = 0.0f;
-    // your code here
-    [self addChild: character];
-    character = (Character*)[CCBReader load:@"Character"];
-    [physicsNode addChild:character];
-    CCPhysicsNode* physicsNode;
-}
--(void)update:(CCTime)delta
-{
-    // put update code here
+    timeSinceObstacle = 0;
+    [self showScore];
+    // put your initialization code above this line
 }
 
-// put new methods here
-- (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
-    // this will get called every time the player touches the screen
-    
-    // Increment the time since the last obstacle was added
-    timeSinceObstacle += delta; // delta is approximately 1/60th of a second
+// put new methods below this line
+
+- (void)tap
+{
+    // this will get called every time the player
+    // taps the screen.
+    [character flap];
+}
+
+- (void)update:(CCTime)delta
+{
+    // this will be run every frame.
+    // delta is the time thay has elapsed since the last time it was run.
+    [character move];
+    // Increment the time since last obstacle was added
+    // delta is ~1/60th of a second
+    timeSinceObstacle += delta;
     
     // Check to see if two seconds have passed
-    if (timeSinceObstacle > 2.0f)
+    if (timeSinceObstacle &gt; 1.5)
     {
         // Add a new obstacle
         [self addObstacle];
         
-        // Then reset the timer.
-        timeSinceObstacle = 0.0f;
+        // Then reset the time.
+        timeSinceObstacle = 0;
+    }
+}
+// put new methods above this line
+- (void) collisionWithObstacle
+{
+    //this gets called when the bird collides with an obstacle
+    [self gameOver];
 }
 
+- (void) passedObstacle
+{
+    // Update the score
+    [self increaseScore];
+}
 @end
-@end
-
