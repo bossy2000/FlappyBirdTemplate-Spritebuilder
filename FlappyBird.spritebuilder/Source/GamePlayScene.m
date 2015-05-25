@@ -24,7 +24,7 @@
 }
 
 // touches the screen
-[Character flap];
+    Character flap;
 
 
 @end
