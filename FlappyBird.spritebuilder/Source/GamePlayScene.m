@@ -12,12 +12,9 @@
     character = (Character*)[CCBReader load:@"Character"];
     [physicsNode addChild:character];
 }
-
 -(void)update:(CCTime)delta
 {
     // put update code here
-    character = (Character*)[CCBReader load:@"Character"];
-    [physicsNode addChild:character];
 }
 
 // put new methods here
@@ -26,6 +23,6 @@
 }
 
 // touches the screen
-    [character flap];
+[character flap;]
 
 @end
